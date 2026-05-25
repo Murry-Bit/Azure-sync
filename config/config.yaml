@@ -1,0 +1,55 @@
+# Azure Backup Agent — Configuration
+# Copy this file and fill in your values before first run.
+
+# -------------------------------------------------------------------------
+# Local folder to monitor (OPTIONAL)
+# -------------------------------------------------------------------------
+# If omitted, defaults to:  C:/Users/<YourName>/Documents/Backup
+# The folder is created automatically if it doesn't exist.
+# watch_folder: "C:/Users/YourName/Documents/Backup"
+
+# -------------------------------------------------------------------------
+# Azure Storage settings (REQUIRED)
+# -------------------------------------------------------------------------
+azure:
+  # Full URL to your Azure Storage Account.
+  account_url: "https://syncstoragev1.blob.core.windows.net"
+
+  # --- Authentication: choose ONE of the two modes below ---
+
+  # OPTION A — Customer mode (your admin gave you this file):
+  # sas_token: "sv=2023-11-03&ss=b&srt=co&sp=rwdlac&se=2027-01-01..."
+  # container_name: "backup-customername"
+
+  # OPTION B — Admin / dev mode (Azure AD login):
+  # Leave sas_token and container_name commented out.
+  container_prefix: "backup"
+
+# -------------------------------------------------------------------------
+# Sync engine settings (all optional – defaults shown)
+# -------------------------------------------------------------------------
+sync:
+  # Seconds to wait after the last file-system event before processing it.
+  # Prevents uploading a file that is still being written.
+  debounce_seconds: 2.0
+
+  # Maximum number of retry attempts on transient Azure errors.
+  max_retries: 5
+
+  # Base multiplier for exponential back-off between retries (seconds).
+  retry_backoff_base: 2.0
+
+  # Number of parallel upload/delete worker threads.
+  worker_threads: 2
+
+  # Perform a full diff-sync when the agent starts.
+  initial_sync_on_start: true
+
+# -------------------------------------------------------------------------
+# Logging settings (all optional – defaults shown)
+# -------------------------------------------------------------------------
+logging:
+  level: "INFO"       # DEBUG | INFO | WARNING | ERROR
+  log_dir: "logs"     # Relative to agent root or absolute path
+  max_bytes: 10485760 # Max size per log file (10 MB)
+  backup_count: 5     # Number of rotated log files to keep

@@ -1,0 +1,10 @@
+# Runtime dependencies
+azure-storage-blob>=12.19.0
+azure-identity>=1.15.0
+watchdog>=4.0.0
+PyYAML>=6.0.1
+tenacity>=8.2.3
+
+# Development / test dependencies
+pytest>=7.4.0
+pytest-mock>=3.12.0
